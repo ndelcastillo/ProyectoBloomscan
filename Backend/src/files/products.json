@@ -1,0 +1,92 @@
+[
+	{
+		"title": "Metamorfosis",
+		"description": "El ciclo de la vida en un cuarteto visual.",
+		"price": 2500,
+		"thumbnail": null,
+		"code": "PROD_0001",
+		"stock": 1,
+		"id": 1
+	},
+	{
+		"title": "Ola Sarmiento",
+		"description": "lalaland",
+		"price": 3000,
+		"thumbnail": null,
+		"code": "PROD_0002",
+		"stock": 1,
+		"id": 2
+	},
+	{
+		"title": "Mentaloda",
+		"description": "lalaland",
+		"price": 3000,
+		"thumbnail": null,
+		"code": "PROD_0003",
+		"stock": 1,
+		"id": 3
+	},
+	{
+		"title": "Paralisis",
+		"description": "lalaland",
+		"price": 3000,
+		"thumbnail": null,
+		"code": "PROD_0004",
+		"stock": 1,
+		"id": 4
+	},
+	{
+		"title": "Levadura Nada",
+		"description": "lalaland",
+		"price": 3000,
+		"thumbnail": null,
+		"code": "PROD_0005",
+		"stock": 1,
+		"id": 5
+	},
+	{
+		"title": "Sentimiento",
+		"description": "lalaland",
+		"price": 3000,
+		"thumbnail": null,
+		"code": "PROD_0006",
+		"stock": 1,
+		"id": 6
+	},
+	{
+		"title": "Parasito verde",
+		"description": "lalaland",
+		"price": 3000,
+		"thumbnail": null,
+		"code": "PROD_0007",
+		"stock": 1,
+		"id": 7
+	},
+	{
+		"title": "Pajaro Nave",
+		"description": "lalaland",
+		"price": 3000,
+		"thumbnail": null,
+		"code": "PROD_0008",
+		"stock": 1,
+		"id": 8
+	},
+	{
+		"title": "Arcoiris Flotante",
+		"description": "lalaland",
+		"price": 3000,
+		"thumbnail": null,
+		"code": "PROD_0009",
+		"stock": 1,
+		"id": 9
+	},
+	{
+		"title": "Livido Fugaz",
+		"description": "lalaland",
+		"price": 3000,
+		"thumbnail": null,
+		"code": "PROD_0010",
+		"stock": 1,
+		"id": 10
+	}
+]
