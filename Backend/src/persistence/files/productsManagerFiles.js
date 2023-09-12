@@ -1,44 +1,55 @@
 import fs from "fs";
 
-export class ProductManagerFiles {
+export class ProductsManagerFiles {
     constructor(filePath) {
         this.filePath = filePath;
     }
 
+    // existe el archivo?
     fileExist() {
         return fs.existsSync(this.filePath);
     }
 
-    async addProduct(productInfo) {
+    // metodo agregar producto
+    async addProduct(title, description, price, thumbnail, code, stock) {
         try {
             if (this.fileExist()) {
-                const contenido = await fs.promises.readFile(this.filePath, "utf-8");
-                const contenidoJson = JSON.parse(contenido);
+                const contenido = await fs.promises.readFile(this.filePath, "utf8");
+                const contenidoJsonEnString = JSON.parse(contenido);
 
-                const existingProduct = contenidoJson.find(product => product.code === productInfo.code);
-                if (existingProduct) {
-                    console.log("Ya existe un producto con este código");
-                    return;
+                if (!title || !description || !price || !stock || !thumbnail || !code) {
+                    return console.log("Todos los campos son obligatorios")
                 } else {
-                    let newId = 1;
-                    if (contenidoJson.length > 0) {
-                        newId = contenidoJson[contenidoJson.length - 1].id + 1
-                    }
-                    productInfo.id = newId;
-                    contenidoJson.push(productInfo);
-                    await fs.promises.writeFile(this.filePath, JSON.stringify(contenidoJson, null, "\t"));
-                    console.log("Producto agregado")
-                    // await fs.promises.unlink(this.filePath);
-                }
-            } else {
-                throw new Error("No es posible guardar el archivo")
-            }
-        } catch (error) {
-            console.log(error.message);
-            throw error;
-        }
-    }
+                    let idProduct;
+                    contenidoJsonEnString.length === 0 ? idProduct = 1 : idProduct = contenidoJsonEnString.length + 1
 
+                    const codeExists = contenidoJsonEnString.find((item) => item.code === code);
+                    if (codeExists) {
+                        return console.log(`No se puede crear el producto "${title}". Ya existe un producto con el código ingresado`);
+                    } else {
+                        const newProduct = {
+                            idProduct,
+                            title,
+                            description,
+                            price,
+                            thumbnail,
+                            code,
+                            stock
+                        };
+                        contenidoJsonEnString.push(newProduct);
+                        console.log(`El producto ${newProduct.title} ha sido agregado`);
+
+                        await fs.promises.writeFile(this.filePath, JSON.stringify(contenidoJsonEnString, null, "\t"));
+                        console.log("Producto agregado");
+                    };
+                };
+            };
+        } catch (error) {
+            throw new Error("No es posible guardar el producto")
+        };
+    };
+
+    // metodo obtener productos
     async getProducts() {
         try {
             if (this.fileExist()) {
@@ -54,6 +65,7 @@ export class ProductManagerFiles {
         }
     }
 
+    // metodo obtener producto por id
     async getProductById(idProduct) {
         try {
             if (this.fileExist()) {
@@ -75,6 +87,7 @@ export class ProductManagerFiles {
         }
     }
 
+    // metodo actualizar producto
     async updateProduct(idProduct, productInfo) {
         try {
             if (this.fileExist()) {
@@ -100,6 +113,7 @@ export class ProductManagerFiles {
         }
     }
 
+    // metodo eliminar producto
     async deleteProduct(idProduct) {
         try {
             if (this.fileExist()) {
@@ -124,12 +138,11 @@ export class ProductManagerFiles {
             throw error;
         }
     }
-
 };
 
 export const operations = async () => {
     try {
-        const manager = new ProductManagerMemory("../products.json");
+        const manager = new ProductsManagerFiles("../products.json");
 
         await manager.addProduct({
             title: "Metamorfosis",
@@ -139,30 +152,18 @@ export const operations = async () => {
             code: "PROD_0001",
             stock: 1
         });
-        await manager.addProduct({
-            title: "Vidrio Soleado",
-            description: "El vidiro del sol reunido en un mismo lugar.",
-            price: 2500,
-            thumbnail: null,
-            code: "PROD_0002",
-            stock: 1
-        });
-
-        // get all products form array
+        
         const products = await manager.getProducts();
         console.log("Productos: \n", products);
 
-        // find product by Id
         await manager.getProductById(3);
 
-        // update product
         await manager.updateProduct(2, {
             title: "Ola Sarmiento",
             description: "lalaland",
             price: 3000
         });
 
-        // delete product
         await manager.deleteProduct(4);
 
     } catch (error) {
